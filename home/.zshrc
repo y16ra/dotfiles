@@ -114,3 +114,9 @@ alias history='history -E'
 function cd() {
   builtin cd $@ && ls;
 }
+
+# rbenv setting
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+source ~/.rbenv/completions/rbenv.zsh
+
