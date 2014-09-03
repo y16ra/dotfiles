@@ -142,3 +142,9 @@ if [ -x "`which go`" ]; then
     export GOPATH=$HOME/go-local
     export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 fi
+
+# java
+if [[ -e /usr/libexec/java_home ]]; then
+    export JAVA_HOME=`/usr/libexec/java_home`
+    export PATH=$JAVA_HOME/bin:$PATH
+fi
