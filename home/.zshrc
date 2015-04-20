@@ -52,6 +52,17 @@ bindkey "^N" history-beginning-search-forward-end
 # すべてのヒストリを表示する
 function history-all { history -E 1 }
 
+# cdr, add-zsh-hook を有効にする
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+ 
+# cdr の設定
+zstyle ':completion:*' recent-dirs-insert both
+zstyle ':chpwd:*' recent-dirs-max 500
+zstyle ':chpwd:*' recent-dirs-default true
+zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
+zstyle ':chpwd:*' recent-dirs-pushd true
+
 # ------------------------------
 # Look And Feel Settings
 # ------------------------------
@@ -134,7 +145,9 @@ eval "$(rbenv init -)"
 alias ll='ls -la'
 
 # docker
-export DOCKER_HOST=tcp://192.168.59.103:2375
+export DOCKER_HOST=tcp://192.168.59.100:2376
+export DOCKER_CERT_PATH="$HOME/.boot2docker/certs/boot2docker-vm"
+export DOCKER_TLS_VERIFY=1
 
 # golang
 if [ -x "`which go`" ]; then
@@ -148,3 +161,16 @@ if [[ -e /usr/libexec/java_home ]]; then
     export JAVA_HOME=`/usr/libexec/java_home`
     export PATH=$JAVA_HOME/bin:$PATH
 fi
+
+# python
+if [ -d "$HOME/.pyenv/shims" ]; then
+  export PATH="$HOME/.pyenv/shims:$PATH"
+  eval "$(pyenv init -)"
+fi
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
+# The next line updates PATH for the Google Cloud SDK.
+source "$HOME/Development/google-cloud-sdk/path.zsh.inc"
+
+# The next line enables bash completion for gcloud.
+source "$HOME/Development/google-cloud-sdk/completion.zsh.inc"
