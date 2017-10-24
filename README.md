@@ -46,9 +46,9 @@ homesick push dotfiles
 # ほかのMacでも同じドットファイルを利用する
 
 ```
-gem install homesick
-homesick clone dotfiles
+$ gem install homesick
+$ homesick clone y16ra/dotfiles
 
 # ほかのMacで変更された内容を取り込む
-homesick pull dotfiles
+$ homesick pull dotfiles
 ```
