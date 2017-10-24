@@ -55,6 +55,18 @@ function history-all { history -E 1 }
 # cdr, add-zsh-hook を有効にする
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
+
+# ssh の補完
+function _ssh {
+  #compadd `fgrep 'Host ' ~/.ssh/config | awk '{print $2}' | sort`;
+  compadd `print_known_hosts`
+}
+
+function print_known_hosts (){
+    if [ -f $HOME/.ssh/known_hosts ]; then
+        cat $HOME/.ssh/known_hosts | tr ',' ' ' | cut -d' ' -f1
+    fi
+}
  
 # cdr の設定
 zstyle ':completion:*' recent-dirs-insert both
@@ -138,8 +150,8 @@ function cd() {
 }
 
 # rbenv setting
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+#export PATH="$HOME/.rbenv/bin:$PATH"
+#eval "$(rbenv init -)"
 
 # ls コマンドの省略
 alias ll='ls -la'
@@ -170,7 +182,10 @@ fi
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 
 # The next line updates PATH for the Google Cloud SDK.
-source "$HOME/Development/google-cloud-sdk/path.zsh.inc"
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 
 # The next line enables bash completion for gcloud.
-source "$HOME/Development/google-cloud-sdk/completion.zsh.inc"
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+
+# SDKMAN
+source "$HOME/.sdkman/bin/sdkman-init.sh"
