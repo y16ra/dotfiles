@@ -156,11 +156,6 @@ function cd() {
 # ls コマンドの省略
 alias ll='ls -la'
 
-# docker
-export DOCKER_HOST=tcp://192.168.59.100:2376
-export DOCKER_CERT_PATH="$HOME/.boot2docker/certs/boot2docker-vm"
-export DOCKER_TLS_VERIFY=1
-
 # golang
 if [ -x "`which go`" ]; then
     export GOROOT=`go env GOROOT`
@@ -170,7 +165,7 @@ fi
 
 # java
 if [[ -e /usr/libexec/java_home ]]; then
-    export JAVA_HOME=`/usr/libexec/java_home`
+    export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
     export PATH=$JAVA_HOME/bin:$PATH
 fi
 
@@ -189,3 +184,8 @@ source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.
 
 # SDKMAN
 source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# brew-files
+if [ -f $(brew --prefix)/etc/brew-wrap ];then
+  source $(brew --prefix)/etc/brew-wrap
+fi
